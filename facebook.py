@@ -56,6 +56,23 @@ def post_status(login_resp, session, status):
 
     return after_post_resp, session
 
+
+class Facebook(object):
+    
+    def __init__(self, credential):
+        self.url = ROOT_URL
+        self.sess = None
+        self.credential = credential
+        self.last_resp = None
+        self.login()
+
+    def login(self):
+        self.last_resp, self.sess = login(self.url, self.credential)
+
+    def update_status(self, status):
+        self.last_resp, self.sess = post_status(self.last_resp, self.sess, status)
+
+
 if __name__ == '__main__':
     resp, sess = login(ROOT_URL, (EMAIL, PASSWORD))
     assert 'Kirim' in resp.text, "Kirim not found"
