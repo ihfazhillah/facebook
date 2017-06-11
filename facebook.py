@@ -26,6 +26,10 @@ def login(url, credentials):
     data_dict.update({'email': credentials[0], 'pass': credentials[1], 'login': 'Masuk'})
 
     login_resp = sess.post(action_url, data=data_dict, headers=headers)
+
+    # need to skip new facebook auth system
+    login_resp = sess.get(url + "/login/save-device/cancel/?ref=dbl")
+
     return login_resp, sess
 
 def post_status(login_resp, session, status):
